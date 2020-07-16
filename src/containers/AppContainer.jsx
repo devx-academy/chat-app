@@ -6,6 +6,9 @@ import '../styles/App.scss'
 import PeopleContainer from './PeopleContainer'
 import ChatContainer from './ChatContainer'
 
+import ChatAppContextProvider from '../contexts/ChatAppContextProvider'
+import MessageWindow from '../components/MessageWindow'
+
 function App() {
   return (
     <div className="app">
@@ -20,6 +23,11 @@ function App() {
         <div className="row">
           <PeopleContainer />
           <ChatContainer />
+        </div>
+        <div className="row">
+          <ChatAppContextProvider>
+            <MessageWindow />
+          </ChatAppContextProvider>
         </div>
       </div>
     </div>
