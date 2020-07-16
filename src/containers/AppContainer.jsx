@@ -4,6 +4,9 @@ import { Alignment, Classes, Button, Navbar, NavbarDivider, NavbarGroup, NavbarH
 
 import '../styles/App.scss'
 
+import ChatAppContextProvider from '../contexts/ChatAppContextProvider'
+import MessageWindow from '../components/MessageWindow'
+
 function App() {
   return (
     <div className="App">
@@ -15,7 +18,12 @@ function App() {
             <Button className={Classes.MINIMAL} icon="home" text="Home" />
           </NavbarGroup>
         </Navbar>
-        <div>app will be there :)</div>
+        <div>
+          app will be there :)
+          <ChatAppContextProvider>
+            <MessageWindow />
+          </ChatAppContextProvider>
+        </div>
       </div>
     </div>
   )
