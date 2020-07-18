@@ -6,6 +6,7 @@ import '../styles/App.scss'
 
 import ChatAppContextProvider from '../contexts/ChatAppContextProvider'
 import MessageWindow from '../components/MessageWindow'
+import SendMessageForm from '../components/SendMessageForm'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           app will be there :)
           <ChatAppContextProvider>
             <MessageWindow />
+            <SendMessageForm />
           </ChatAppContextProvider>
         </div>
       </div>

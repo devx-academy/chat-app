@@ -1,6 +1,5 @@
 import React from 'react'
 import receivedMessageConnector from '../hocs/receivedMessageConnector'
-import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 const MessageWindow = ({ messages }) => {
