@@ -8,6 +8,7 @@ import ChatContainer from './ChatContainer'
 
 import ChatAppContextProvider from '../contexts/ChatAppContextProvider'
 import MessageWindow from '../components/MessageWindow'
+import SendMessageForm from '../components/SendMessageForm'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <div className="row">
           <ChatAppContextProvider>
             <MessageWindow />
+            <SendMessageForm />
           </ChatAppContextProvider>
         </div>
       </div>
