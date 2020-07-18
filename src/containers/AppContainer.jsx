@@ -1,21 +1,25 @@
 import React from 'react'
 
-import { Alignment, Classes, Button, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from '@blueprintjs/core'
+import { Alignment, Classes, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from '@blueprintjs/core'
 
 import '../styles/App.scss'
+import PeopleContainer from './PeopleContainer'
+import ChatContainer from './ChatContainer'
 
 function App() {
   return (
-    <div className="App">
-      <div className={Classes.DARK}>
+    <div className="app">
+      <div className={`${Classes.DARK} full-size`}>
         <Navbar>
           <NavbarGroup align={Alignment.LEFT}>
             <NavbarHeading>Chat App</NavbarHeading>
             <NavbarDivider />
-            <Button className={Classes.MINIMAL} icon="home" text="Home" />
           </NavbarGroup>
         </Navbar>
-        <div>app will be there :)</div>
+        <div className="row">
+          <PeopleContainer />
+          <ChatContainer />
+        </div>
       </div>
     </div>
   )
