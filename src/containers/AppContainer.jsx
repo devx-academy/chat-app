@@ -14,6 +14,7 @@ function App() {
           <NavbarGroup align={Alignment.LEFT}>
             <NavbarHeading>Chat App</NavbarHeading>
             <NavbarDivider />
+            <NavbarHeading>devx.conf 2020</NavbarHeading>
           </NavbarGroup>
         </Navbar>
         <div className="row">
