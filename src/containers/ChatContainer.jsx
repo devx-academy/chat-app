@@ -1,12 +1,15 @@
 import React from 'react'
 import Person from '../components/Person'
 import Message from '../components/Message'
+import ChatTextInput from '../components/ChatTextInput'
 
 class ChatContainer extends React.Component {
   render() {
     return (
       <div className="chat-container">
-        <Person name="Tom" />
+        <div className="chat-person">
+          <Person name="Tom" />
+        </div>
         <div className="message-container">
           <Message
             incoming
@@ -16,6 +19,7 @@ class ChatContainer extends React.Component {
           <Message incoming message="Class aptent taciti sociosqu ad litora torquent per conubia nostr" />
           <Message message="per inceptos hymenaeos" />
         </div>
+        <ChatTextInput />
       </div>
     )
   }
