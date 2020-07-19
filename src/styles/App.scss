@@ -24,11 +24,32 @@
   flex: 2;
   height: 100%;
   background-color: $dark-gray4;
+  max-width: 320px;
 }
 
 .chat-container {
   flex: 5;
   height: 100%;
+
+  .message-container {
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+
+    .message-wrapper {
+      display: flex;
+      max-width: 50%;
+      margin-bottom: 12px;
+    }
+
+    .message-wrapper__in {
+      align-self: flex-start;
+    }
+
+    .message-wrapper__out {
+      align-self: flex-end;
+    }
+  }
 }
 
 .person-wrapper {
@@ -37,6 +58,7 @@
   height: 80px;
   padding: 12px;
   flex-direction: row;
+  align-items: center;
 
   .person-icon {
     width: 50px;
@@ -48,5 +70,12 @@
     align-items: center;
     justify-content: center;
     margin-right: 12px;
+  }
+
+  .person-last-message {
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
