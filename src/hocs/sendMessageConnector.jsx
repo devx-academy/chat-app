@@ -8,7 +8,7 @@ export default (WrappedComponent) => (props) => {
 
   useEffect(() => {
     const sendMessage$ = chatContext.sendMessages$.pipe(
-      map((msg) => ({message: msg})),
+      map((msg) => ({from: chatContext.user.login, message: msg})),
       map(when(
         (msgObj) => (msgObj.message || '').match(/^\[[^ ?\]\(\)]*\]\:.*$/),
         (msgObj) => {
@@ -18,11 +18,13 @@ export default (WrappedComponent) => (props) => {
             message: (parsedMessage[2] || '').trim(),
           }
         }
-      ))
+      )),
       // TODO: call BE to send an email when ...
-      // TODO: call BE to send message
     )
-    sendMessage$.subscribe((msg) => console.log('zprava', msg))
+    sendMessage$.subscribe((msg) => {
+      console.log('zprava', msg)
+      // TODO: call BE to send message
+    })
   }, [])
 
   return (<WrappedComponent {...props} sendMessage={chatContext.sendMessage} />)

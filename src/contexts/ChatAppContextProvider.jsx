@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
-import { Subject, BehaviorSubject, ReplaySubject } from 'rxjs'
+import React from 'react'
+import { Subject, BehaviorSubject } from 'rxjs'
+import { STOMP_STATES } from '../services/api'
 
 export const ChatAppContext = React.createContext()
 
-const initChatContext = () => {
+const initChatContext = (username) => {
   let receivedMessages = []
+
+  const chatConnectionState$ = new BehaviorSubject(STOMP_STATES.DISCONNECTED)
   const receivedMessages$ = new BehaviorSubject(receivedMessages)
   const sendMessages$ = new Subject()
 
   return {
+    user: {
+      login: username,
+    },
+    connection: {
+      connectionState$: chatConnectionState$,
+    },
     receivedMessages$,
     sendMessages$,
     receiveMessage: (message) => {
@@ -21,7 +30,7 @@ const initChatContext = () => {
 
 export default (props) => {
   return (
-    <ChatAppContext.Provider value={initChatContext()}>
+    <ChatAppContext.Provider value={initChatContext(props.username)}>
       {props.children}
     </ChatAppContext.Provider>
   )

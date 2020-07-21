@@ -1,11 +1,11 @@
-import React, { useContext, useLayoutEffect, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ChatAppContext } from '../contexts/ChatAppContextProvider'
 
 export default (extendObservablePipe) => (WrappedComponent) => (props) => {
   const chatContext = useContext(ChatAppContext)
   const [messages, setMessages] = useState([])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const msgSubscription = (extendObservablePipe ? extendObservablePipe(chatContext.receivedMessages$) :
         chatContext.receivedMessages$
     ).subscribe((msgs) => setMessages(msgs))

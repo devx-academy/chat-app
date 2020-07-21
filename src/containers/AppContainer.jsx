@@ -21,7 +21,7 @@ function App() {
         </Navbar>
         <div>
           app will be there :)
-          <ChatAppContextProvider>
+          <ChatAppContextProvider username="Jakub">
             <MessageWindow />
             <SendMessageForm />
           </ChatAppContextProvider>
