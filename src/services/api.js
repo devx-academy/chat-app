@@ -2,12 +2,12 @@ import Axios from 'axios'
 import { Client, Message } from '@stomp/stompjs'
 
 const api = Axios.create({
-  baseURL: 'https://some-domain.com/api/',
+  baseURL: 'http://localhost:8080/',
   timeout: 5000,
   headers: {'X-Custom-Header': 'foobar'}
 });
 
-export const sendMessage = (msg) => api.post('send/message', msg)
+export const sendMessage = (msg) => api.post('/message', msg)
 
 
 export const STOMP_STATES = {
@@ -30,21 +30,25 @@ export const getStompClient = (brokerURL, stompConnectionState$) => {
     heartbeatOutgoing: 4000
   })
 
-  stompClient.beforeConnect(() => {
+  stompClient.beforeConnect = () => {
+    console.log("before");
     stompConnectionState$.next(STOMP_STATES.CONNECTING)
-  })
+  }
 
-  stompClient.onStompError(() => {
+  stompClient.onStompError =() => {
+    console.log("err");
     stompConnectionState$.next(STOMP_STATES.DISCONNECTED)
-  })
+  };
 
-  stompClient.onConnect(() => {
+  stompClient.onConnect = () => {
+    console.log("hurrah");
     stompConnectionState$.next(STOMP_STATES.CONNECTED)
-  })
+  }
 
-  stompClient.onDisconnect(() => {
+  stompClient.onDisconnect = () => {
+    console.log(":-(");
     stompConnectionState$.next(STOMP_STATES.DISCONNECTED)
-  })
+  };
 
   stompClient.activate()
 
