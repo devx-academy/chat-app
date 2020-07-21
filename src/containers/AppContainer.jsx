@@ -26,7 +26,7 @@ function App() {
           <ChatContainer />
         </div>
         <div className="row">
-          <ChatAppContextProvider>
+          <ChatAppContextProvider username="Jakub">
             <MessageWindow />
             <SendMessageForm />
           </ChatAppContextProvider>

@@ -11,5 +11,5 @@ const MessageWindow = ({ messages }) => {
 }
 
 export default receivedMessageConnector((stream$) => stream$.pipe(
-  map((msgs) => msgs.map((msg) => `${msg} - ${new Date()}`))
+  map((msgs) => msgs.map((msg) => `${msg.message} - ${new Date()}`))
 ))(MessageWindow)
