@@ -23,7 +23,9 @@ const initChatContext = (username) => {
     console.log(value);
     if (value === STOMP_STATES.CONNECTED) {
       subscription$.next(
-        stompClient.subscribe("/topic/greetings", function (frame) {
+        // pokud odeslu na #app - tak prijimam na /topic/channel/app
+        // pokud odeslu na @user - tak prijimam na /topic/pm/user
+        stompClient.subscribe("/topic/channel/all", function (frame) {
           console.log(JSON.parse(frame.body))
           receiveMessage(JSON.parse(frame.body));
         })
@@ -32,10 +34,10 @@ const initChatContext = (username) => {
   })
 
   sendMessages$.subscribe(value => {
-    stompClient.publish({destination: '/app/hello', body: JSON.stringify({
+    // zatim posilam zpravy taky pres STOMP, ale muzu udelat i ten endpoint
+    stompClient.publish({destination: '/app/message/#all', body: JSON.stringify({
         body: value,
-        sender: username,
-        receiver: '#all'
+        sender: username
     })});
   })
 
