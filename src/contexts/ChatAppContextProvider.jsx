@@ -10,7 +10,7 @@ const initChatContext = (username) => {
 
   const chatConnectionState$ = new BehaviorSubject(STOMP_STATES.DISCONNECTED)
   const receivedMessages$ = new BehaviorSubject(receivedMessages)
-  const subscription$ = new Subject()
+  const subscription$ = new BehaviorSubject(null)
   const sendMessages$ = new Subject()
 
   const receiveMessage = (message) => {
@@ -19,6 +19,8 @@ const initChatContext = (username) => {
   }
 
   const stompClient = getStompClient("ws://localhost:8080/gs-guide-websocket", chatConnectionState$)
+
+  // TODO prenest do receivedMessagConnector
   chatConnectionState$.subscribe(value => {
     console.log(value);
     if (value === STOMP_STATES.CONNECTED) {
@@ -33,6 +35,7 @@ const initChatContext = (username) => {
     }
   })
 
+  // TODO prenest do sendMessageConnector
   sendMessages$.subscribe(value => {
     // zatim posilam zpravy taky pres STOMP, ale muzu udelat i ten endpoint
     stompClient.publish({destination: '/app/message/#all', body: JSON.stringify({
@@ -48,7 +51,7 @@ const initChatContext = (username) => {
     connection: {
       connectionState$: chatConnectionState$,
       client: stompClient,
-      subscription: subscription
+      subscription
     },
     receivedMessages$,
     sendMessages$,

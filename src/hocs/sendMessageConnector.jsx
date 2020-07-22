@@ -10,11 +10,11 @@ export default (WrappedComponent) => (props) => {
     const sendMessage$ = chatContext.sendMessages$.pipe(
       map((msg) => ({from: chatContext.user.login, message: msg})),
       map(when(
-        (msgObj) => (msgObj.message || '').match(/^\[[^ ?\]\(\)]*\]\:.*$/),
+        (msgObj) => (msgObj.message || '').match(/^(@[^ ?,]).*$/),
         (msgObj) => {
-          const parsedMessage = msgObj.message.match(/(\[[^ ?\]\(\)]*\]\:)(.*)/)
+          const parsedMessage = msgObj.message.match(/(@[^ ?,])(.*)/)
           return {
-            to: parsedMessage[1].substring(1, parsedMessage[1].length - 2),
+            to: parsedMessage[1].substring(1).trim(),
             message: (parsedMessage[2] || '').trim(),
           }
         }

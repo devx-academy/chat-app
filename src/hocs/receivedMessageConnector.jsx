@@ -14,9 +14,9 @@ export default (extendObservablePipe) => (WrappedComponent) => (props) => {
   }, [])
 
   return (<>
-    <div><button onClick={() => {
+    {/*<div><button onClick={() => {
       chatContext.receiveMessage('jedna')
-    }}>generate message</button></div>
+    }}>generate message</button></div>*/}
     <WrappedComponent {...props} messages={messages}/>
   </>)
 }
