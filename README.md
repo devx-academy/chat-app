@@ -28,3 +28,10 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Docker
+
+```
+docker tag chat-app eu.gcr.io/devx-conf-2020/chat-app/chat-app:v0.0.1
+docker push eu.gcr.io/devx-conf-2020/chat-app/chat-app:v0.0.1
+```
