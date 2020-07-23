@@ -10,9 +10,9 @@ export default () => {
   return (
     <div className="chat-container">
       <div className="chat-person">
-        <Person name={chatContext.user.login}/>
+        <Person name={chatContext.user.login} />
       </div>
-      <MessagesWindow/>
+      <MessagesWindow loggedUser={chatContext.user.login}/>
       <ChatTextInput/>
     </div>
   )
