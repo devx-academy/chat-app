@@ -5,9 +5,8 @@ import { getStompClient, STOMP_STATES } from '../services/api'
 export const ChatAppContext = React.createContext()
 
 const initChatContext = (username) => {
+  // TODO 1 - inicializace kontextu s Observables
   let receivedMessages = []
-  let subscription;
-
   const chatConnectionState$ = new BehaviorSubject(STOMP_STATES.DISCONNECTED)
   const receivedMessages$ = new BehaviorSubject(receivedMessages)
   const subscription$ = new BehaviorSubject(null)
@@ -18,30 +17,19 @@ const initChatContext = (username) => {
     receivedMessages$.next(receivedMessages)
   }
 
-  const stompClient = getStompClient("ws://localhost:8080/gs-guide-websocket", chatConnectionState$)
-
-  // TODO prenest do receivedMessagConnector
+  // TODO 2 - stream drzici stav pripojeni na websocket
+  const stompClient = getStompClient("wss://chat-app.devx-conf.dtforce.com/api/websocket", chatConnectionState$)
   chatConnectionState$.subscribe(value => {
-    console.log(value);
     if (value === STOMP_STATES.CONNECTED) {
       subscription$.next(
         // pokud odeslu na #app - tak prijimam na /topic/channel/app
         // pokud odeslu na @user - tak prijimam na /topic/pm/user
+        // TODO 5 - prace s prijatymi zpravami
         stompClient.subscribe("/topic/channel/all", function (frame) {
-          console.log(JSON.parse(frame.body))
-          receiveMessage(JSON.parse(frame.body));
+          receiveMessage(JSON.parse(frame.body))
         })
       )
     }
-  })
-
-  // TODO prenest do sendMessageConnector
-  sendMessages$.subscribe(value => {
-    // zatim posilam zpravy taky pres STOMP, ale muzu udelat i ten endpoint
-    stompClient.publish({destination: '/app/message/#all', body: JSON.stringify({
-        body: value,
-        sender: username
-    })});
   })
 
   return {
@@ -51,7 +39,6 @@ const initChatContext = (username) => {
     connection: {
       connectionState$: chatConnectionState$,
       client: stompClient,
-      subscription
     },
     receivedMessages$,
     sendMessages$,
@@ -62,7 +49,7 @@ const initChatContext = (username) => {
 
 export default (props) => {
   return (
-    <ChatAppContext.Provider value={initChatContext(props.username)}>
+    <ChatAppContext.Provider value={initChatContext(props.name)}>
       {props.children}
     </ChatAppContext.Provider>
   )

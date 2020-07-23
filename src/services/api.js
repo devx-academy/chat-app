@@ -1,13 +1,12 @@
 import Axios from 'axios'
-import { Client, Message } from '@stomp/stompjs'
+import { Client } from '@stomp/stompjs'
 
 const api = Axios.create({
-  baseURL: 'http://localhost:8080/',
+  baseURL: 'https://chat-app.devx-conf.dtforce.com/',
   timeout: 5000,
-  headers: {'X-Custom-Header': 'foobar'}
 });
 
-export const sendMessage = (msg) => api.post('/message', msg)
+export const sendMessage = (msg) => api.post('/api/message', msg)
 
 
 export const STOMP_STATES = {

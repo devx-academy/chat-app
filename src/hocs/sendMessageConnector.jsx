@@ -1,30 +1,35 @@
 import React, { useContext, useEffect } from 'react'
 import { when } from 'ramda'
 import { ChatAppContext } from '../contexts/ChatAppContextProvider'
-import { map } from 'rxjs/operators'
+import { map, mergeMap, tap } from 'rxjs/operators'
+import { from } from 'rxjs'
+import { sendMessage } from '../services/api'
 
 export default (WrappedComponent) => (props) => {
   const chatContext = useContext(ChatAppContext)
 
   useEffect(() => {
     const sendMessage$ = chatContext.sendMessages$.pipe(
-      map((msg) => ({from: chatContext.user.login, message: msg})),
+      map((msg) => ({sender: chatContext.user.login, body: msg, receiver: '#all'})),
+      // TODO 4 - private message
       map(when(
-        (msgObj) => (msgObj.message || '').match(/^(@[^ ?,]).*$/),
+        (msgObj) => (msgObj.body || '').match(/^(@[^ ?,]).*$/),
         (msgObj) => {
-          const parsedMessage = msgObj.message.match(/(@[^ ?,])(.*)/)
+          const parsedMessage = msgObj.body.match(/(@[^ ?,])(.*)/)
           return {
-            to: parsedMessage[1].substring(1).trim(),
-            message: (parsedMessage[2] || '').trim(),
+            receiver: `@${parsedMessage[1].substring(1).trim()}`,
+            body: (parsedMessage[2] || '').trim(),
           }
         }
       )),
-      // TODO: call BE to send an email when ...
+      // TODO 3 - send message
+      mergeMap((msg) => {
+        return from(sendMessage(msg))
+      })
     )
-    sendMessage$.subscribe((msg) => {
-      console.log('zprava', msg)
-      // TODO: call BE to send message
-    })
+    const subscription = sendMessage$.subscribe()
+
+    return () => subscription.unsubscribe()
   }, [])
 
   return (<WrappedComponent {...props} sendMessage={chatContext.sendMessage} />)

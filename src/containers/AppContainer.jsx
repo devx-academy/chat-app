@@ -20,17 +20,12 @@ function App() {
           </NavbarGroup>
         </Navbar>
         <div className="row">
-          <ChatAppContextProvider username="Jakub">
-            <PeopleContainer />
+          {/* TODO - TOM: vykreslit form pro zadani a pres state nacpat nize do `name` propsy */}
+          <ChatAppContextProvider name="Jakub">
+            {/*<PeopleContainer />*/}
             <ChatContainer />
           </ChatAppContextProvider>
         </div>
-        {/*<div className="row">
-          <ChatAppContextProvider username="Jakub">
-            <MessageWindow />
-            <SendMessageForm />
-          </ChatAppContextProvider>
-        </div>*/}
       </div>
     </div>
   )

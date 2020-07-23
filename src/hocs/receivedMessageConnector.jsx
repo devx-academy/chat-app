@@ -6,6 +6,7 @@ export default (extendObservablePipe) => (WrappedComponent) => (props) => {
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
+    // TODO 6 - stream zpracovavajici prijate zpravy
     const msgSubscription = (extendObservablePipe ? extendObservablePipe(chatContext.receivedMessages$) :
         chatContext.receivedMessages$
     ).subscribe((msgs) => setMessages(msgs))
@@ -13,10 +14,5 @@ export default (extendObservablePipe) => (WrappedComponent) => (props) => {
     return () => msgSubscription.unsubscribe()
   }, [])
 
-  return (<>
-    {/*<div><button onClick={() => {
-      chatContext.receiveMessage('jedna')
-    }}>generate message</button></div>*/}
-    <WrappedComponent {...props} messages={messages}/>
-  </>)
+  return <WrappedComponent {...props} messages={messages} />
 }

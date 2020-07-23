@@ -12,7 +12,10 @@ const ChatTextInput = ({ sendMessage }) => {
       <InputGroup
         placeholder="write your message here ..."
         large
-        rightElement={<Button icon={IconNames.SEND_MESSAGE} onClick={() => sendMessage(msg)} />}
+        rightElement={<Button icon={IconNames.SEND_MESSAGE} onClick={() => {
+          sendMessage(msg)
+          setMsg('')
+        }} />}
         onChange={(value) => setMsg(value.target.value)}
         value={msg}
       />
