@@ -3,7 +3,7 @@ import React from 'react'
 import { Alignment, Classes, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from '@blueprintjs/core'
 
 import '../styles/App.scss'
-import PeopleContainer from './PeopleContainer'
+import PeopleContainer from './PeopleContainerFunctional'
 import ChatContainer from './ChatContainer'
 
 import ChatAppContextProvider from '../contexts/ChatAppContextProvider'
@@ -15,14 +15,14 @@ function App() {
         <Navbar>
           <NavbarGroup align={Alignment.LEFT}>
             <NavbarHeading>Chat App</NavbarHeading>
-            <NavbarDivider/>
+            <NavbarDivider />
             <NavbarHeading>devx.conf 2020</NavbarHeading>
           </NavbarGroup>
         </Navbar>
         <div className="row">
           <ChatAppContextProvider username="Jakub">
-            <PeopleContainer/>
-            <ChatContainer/>
+            <PeopleContainer />
+            <ChatContainer />
           </ChatAppContextProvider>
         </div>
         {/*<div className="row">

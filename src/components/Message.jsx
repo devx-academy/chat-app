@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { Callout } from '@blueprintjs/core'
 
@@ -11,4 +11,4 @@ const Message = (props) => {
   )
 }
 
-export default Message
+export default memo(Message)
